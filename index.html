@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#f4f6fb">
+  <title>YT Lista — Entrar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      var t = localStorage.getItem('yt_tema') || 'light';
+      if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f4f6fb;
+      --bg-card: #ffffff;
+      --bg-input: #eef1f7;
+      --text: #1a1a2e;
+      --text-muted: #6b7280;
+      --accent: #4361ee;
+      --accent-light: #3a56d4;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    [data-theme="dark"] {
+      --bg: #0f0f1a;
+      --bg-card: #1a1a2e;
+      --bg-input: #16213e;
+      --text: #e0e0e0;
+      --text-muted: #8888aa;
+      --accent: #6c8cff;
+      --accent-light: #7b98ff;
+      --border: #2a2a45;
+      --shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    html, body { height: 100%; }
+    body {
+      font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      padding: 20px;
+    }
+
+    .login-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 36px 28px 28px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .login-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, #4361ee 0%, #7b98ff 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(67,97,238,0.3);
+    }
+    .login-logo svg { width: 38px; height: 38px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .login-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    .login-subtitle {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .btn-import {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      border: none;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn-import:active { opacity: 0.85; transform: scale(0.98); }
+
+    .btn-import-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .btn-import-icon svg { width: 20px; height: 20px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    .btn-import-text { text-align: left; }
+    .btn-import-text .btn-title { font-size: 0.92rem; font-weight: 800; display: block; }
+    .btn-import-text .btn-sub { font-size: 0.72rem; font-weight: 600; display: block; margin-top: 1px; }
+
+    /* Verde — carregar arquivo JSON */
+    .btn-json {
+      background: rgba(22,163,74,0.1);
+      color: #15803d;
+    }
+    [data-theme="dark"] .btn-json { background: rgba(74,222,128,0.12); color: #4ade80; }
+    .btn-json .btn-import-icon { background: #16a34a; }
+    .btn-json .btn-import-icon svg { stroke: #fff; }
+
+    /* Azul — associar pasta */
+    .btn-pasta {
+      background: rgba(67,97,238,0.1);
+      color: #3a56d4;
+    }
+    [data-theme="dark"] .btn-pasta { background: rgba(108,140,255,0.12); color: #6c8cff; }
+    .btn-pasta .btn-import-icon { background: #4361ee; }
+    .btn-pasta .btn-import-icon svg { stroke: #fff; }
+
+    .pasta-status {
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+    }
+    .pasta-status.ativa {
+      display: flex;
+      background: rgba(67,97,238,0.1);
+      color: #4361ee;
+    }
+    [data-theme="dark"] .pasta-status.ativa { background: rgba(108,140,255,0.15); color: #6c8cff; }
+    .pasta-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #4361ee; display: inline-block; }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 14px 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .btn-skip {
+      width: 100%; padding: 12px 20px;
+      background: none; border: 1.5px solid var(--border);
+      color: var(--text-muted); border-radius: var(--radius-sm);
+      font-family: 'Nunito', sans-serif; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .btn-skip:hover { border-color: var(--accent); color: var(--accent); }
+
+    .login-footer {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .btn-tema {
+      display: flex; align-items: center; gap: 6px;
+      background: none; border: 1.5px solid var(--border);
+      color: var(--text-muted); padding: 7px 12px;
+      border-radius: 30px; cursor: pointer;
+      font-family: 'Nunito', sans-serif; font-size: 0.78rem; font-weight: 700;
+      transition: all 0.15s;
+    }
+    .btn-tema svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .btn-tema:hover { border-color: var(--accent); color: var(--accent); }
+
+    .versao { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #1a1a2e; color: #fff; padding: 9px 20px; border-radius: 30px;
+      font-size: 0.84rem; font-weight: 700; z-index: 999; white-space: nowrap;
+      animation: fadeIn 0.2s; pointer-events: none;
+    }
+    [data-theme="dark"] .toast { background: #4361ee; }
+    @keyframes fadeIn { from { opacity:0; transform: translateX(-50%) translateY(8px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+  </style>
+</head>
+<body>
+
+<!-- SVG inline icons -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-graduation" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2m-4.34-5.66 1.41-1.41M6.34 17.66l-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+</svg>
+
+<div class="login-card">
+  <!-- Logo -->
+  <div class="login-logo">
+    <svg viewBox="0 0 24 24"><use href="#i-graduation"/></svg>
+  </div>
+
+  <h1 class="login-title">YT Lista</h1>
+  <p class="login-subtitle">Gerencie suas aulas do YouTube.<br>Importe ou associe uma pasta para começar.</p>
+
+  <!-- Status da pasta associada -->
+  <div class="pasta-status" id="pastaStatus">
+    <span class="pasta-status-dot"></span>
+    <span id="pastaStatusTxt">Pasta associada</span>
+  </div>
+
+  <!-- Importar JSON -->
+  <button class="btn-import btn-json" id="btnImportar">
+    <div class="btn-import-icon">
+      <svg viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+    </div>
+    <div class="btn-import-text">
+      <span class="btn-title">Importar arquivo JSON</span>
+      <span class="btn-sub">Carrega backup salvo anteriormente</span>
+    </div>
+  </button>
+  <input type="file" id="fileInput" accept=".json" style="display:none">
+
+  <!-- Associar pasta -->
+  <button class="btn-import btn-pasta" id="btnPasta">
+    <div class="btn-import-icon">
+      <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><polyline points="9 14 12 17 15 14"/></svg>
+    </div>
+    <div class="btn-import-text">
+      <span class="btn-title" id="btnPastaTitle">Associar pasta</span>
+      <span class="btn-sub" id="btnPastaSub">Salva e carrega automaticamente</span>
+    </div>
+  </button>
+
+  <div class="divider">ou</div>
+
+  <!-- Continuar sem dados -->
+  <button class="btn-skip" id="btnPular">Começar sem importar</button>
+
+  <div class="login-footer">
+    <button class="btn-tema" id="btnTema">
+      <svg id="temaIcon" viewBox="0 0 24 24"><use href="#i-sun"/></svg>
+      <span id="temaLabel">Claro</span>
+    </button>
+    <span class="versao" style="margin-left:auto">v2026-05-08</span>
+  </div>
+</div>
+
+<script>
+// ===== TEMA =====
+(function() {
+  const btn = document.getElementById('btnTema');
+  const icon = document.getElementById('temaIcon');
+  const label = document.getElementById('temaLabel');
+
+  function aplicar(t) {
+    if (t === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      icon.innerHTML = '<use href="#i-moon"/>';
+      label.textContent = 'Escuro';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      icon.innerHTML = '<use href="#i-sun"/>';
+      label.textContent = 'Claro';
+    }
+    localStorage.setItem('yt_tema', t);
+  }
+
+  aplicar(localStorage.getItem('yt_tema') || 'light');
+  btn.addEventListener('click', () => {
+    aplicar(localStorage.getItem('yt_tema') === 'dark' ? 'light' : 'dark');
+  });
+})();
+
+// ===== INDEXEDDB para handle da pasta =====
+function abrirDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open('yt_lista_fs', 1);
+    req.onupgradeneeded = () => req.result.createObjectStore('handles');
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function salvarHandle(handle) {
+  const db = await abrirDB();
+  const tx = db.transaction('handles', 'readwrite');
+  tx.objectStore('handles').put(handle, 'dir');
+  return new Promise(r => { tx.oncomplete = r; });
+}
+
+async function obterHandle() {
+  try {
+    const db = await abrirDB();
+    const tx = db.transaction('handles', 'readonly');
+    return new Promise(resolve => {
+      const req = tx.objectStore('handles').get('dir');
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => resolve(null);
+    });
+  } catch { return null; }
+}
+
+// ===== TOAST =====
+function toast(msg) {
+  document.querySelectorAll('.toast').forEach(e => e.remove());
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2500);
+}
+
+// ===== VERIFICAR PASTA EXISTENTE =====
+async function verificarPastaExistente() {
+  const h = await obterHandle();
+  if (!h) return;
+  try {
+    const perm = await h.queryPermission({ mode: 'readwrite' });
+    if (perm === 'granted') {
+      mostrarPastaAtiva(h.name);
+      document.getElementById('btnPastaTitle').textContent = 'Acessar pasta';
+      document.getElementById('btnPastaSub').textContent = 'Pasta: ' + h.name;
+    }
+  } catch {}
+}
+
+function mostrarPastaAtiva(nome) {
+  const el = document.getElementById('pastaStatus');
+  el.classList.add('ativa');
+  document.getElementById('pastaStatusTxt').textContent = 'Pasta associada: ' + nome;
+}
+
+verificarPastaExistente();
+
+// ===== IMPORTAR JSON (arquivo) =====
+document.getElementById('btnImportar').addEventListener('click', () => {
+  document.getElementById('fileInput').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', function() {
+  const file = this.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const parsed = JSON.parse(ev.target.result);
+      const dados = {
+        videos:   Array.isArray(parsed.videos)   ? parsed.videos   : [],
+        listas: Array.isArray(parsed.listas)  ? parsed.listas : [],
+      };
+      localStorage.setItem('yt_lista_dados', JSON.stringify(dados));
+      window.location.href = 'app.html';
+    } catch {
+      toast('Arquivo inválido ou corrompido.');
+    }
+  };
+  reader.readAsText(file);
+  this.value = '';
+});
+
+// ===== ASSOCIAR / CARREGAR DA PASTA =====
+document.getElementById('btnPasta').addEventListener('click', async () => {
+  if (!window.showDirectoryPicker) {
+    toast('Seu navegador não suporta associação de pasta. Use Chrome/Edge.');
+    return;
+  }
+  try {
+    let dirHandle = await obterHandle();
+
+    // Se já tem pasta salva, pede permissão; senão abre seletor
+    if (dirHandle) {
+      try {
+        const perm = await dirHandle.requestPermission({ mode: 'readwrite' });
+        if (perm !== 'granted') dirHandle = null;
+      } catch { dirHandle = null; }
+    }
+
+    if (!dirHandle) {
+      dirHandle = await window.showDirectoryPicker({ id: 'yt_lista', startIn: 'documents' });
+      try { await salvarHandle(dirHandle); } catch {}
+    }
+
+    // Procura yt_lista.json (ou backups com prefixo yt_lista_) na pasta
+    const arquivos = [];
+    for await (const [name, handle] of dirHandle) {
+      if (
+        handle.kind === 'file' &&
+        (name === 'yt_lista.json' || (name.startsWith('yt_lista_') && name.endsWith('.json')))
+      ) {
+        arquivos.push({ name, handle });
+      }
+    }
+
+    if (arquivos.length === 0) {
+      mostrarPastaAtiva(dirHandle.name);
+      document.getElementById('btnPastaTitle').textContent = 'Acessar pasta';
+      document.getElementById('btnPastaSub').textContent = 'Pasta: ' + dirHandle.name;
+      toast('Pasta associada! Nenhum arquivo encontrado — começando vazio.');
+      setTimeout(() => window.location.href = 'app.html', 1400);
+      return;
+    }
+
+    // Prefere yt_lista.json, senão o mais recente por nome
+    arquivos.sort((a, b) => {
+      if (a.name === 'yt_lista.json') return -1;
+      if (b.name === 'yt_lista.json') return 1;
+      return b.name.localeCompare(a.name);
+    });
+
+    const file = await arquivos[0].handle.getFile();
+    const text = await file.text();
+    const parsed = JSON.parse(text);
+    const dados = {
+      videos:   Array.isArray(parsed.videos)   ? parsed.videos   : [],
+      listas: Array.isArray(parsed.listas)  ? parsed.listas : [],
+    };
+    localStorage.setItem('yt_lista_dados', JSON.stringify(dados));
+    toast('Dados carregados de ' + arquivos[0].name);
+    setTimeout(() => window.location.href = 'app.html', 800);
+
+  } catch (err) {
+    if (err.name === 'AbortError') return;
+    toast('Erro: ' + err.message);
+  }
+});
+
+// ===== PULAR =====
+document.getElementById('btnPular').addEventListener('click', () => {
+  window.location.href = 'app.html';
+});
+</script>
+</body>
+</html>

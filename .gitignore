@@ -1,0 +1,14 @@
+# Dados locais (não versionar dados pessoais)
+dados_lista_youtube/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+*.code-workspace
+
+# Logs
+*.log
