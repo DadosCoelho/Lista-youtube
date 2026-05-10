@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="484" height="440" viewBox="0 0 484 440">
+
+  <!-- Card 1 -->
+  <rect x="60" y="50" width="360" height="130" rx="10" fill="#dde8f5"/>
+
+  <!-- Green circle -->
+  <circle cx="130" cy="115" r="55" fill="#a8e063"/>
+  <path d="M130 60 A55 55 0 0 1 130 170 Z" fill="#6dcf6d"/>
+
+  <!-- Checkmark -->
+  <polyline points="105,115 122,132 158,98" stroke="#2db37a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Lines card 1 -->
+  <rect x="210" y="88" width="80" height="14" rx="4" fill="#c5d5ea"/>
+  <rect x="210" y="112" width="130" height="14" rx="4" fill="#c5d5ea"/>
+  <rect x="210" y="136" width="100" height="14" rx="4" fill="#c5d5ea"/>
+
+  <!-- Card 2 -->
+  <rect x="60" y="250" width="360" height="130" rx="10" fill="#dde8f5"/>
+
+  <!-- Yellow circle -->
+  <circle cx="130" cy="315" r="55" fill="#ffe234"/>
+  <path d="M130 260 A55 55 0 0 1 130 370 Z" fill="#ffc107"/>
+
+  <!-- Lines card 2 -->
+  <rect x="210" y="288" width="80" height="14" rx="4" fill="#c5d5ea"/>
+  <rect x="210" y="312" width="130" height="14" rx="4" fill="#c5d5ea"/>
+  <rect x="210" y="336" width="100" height="14" rx="4" fill="#c5d5ea"/>
+</svg>
