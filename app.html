@@ -684,14 +684,7 @@
       .video-thumb { width: 160px; min-width: 160px; height: 90px; }
       .modal { max-width: 520px; }
 
-      /* module cards em 2 colunas */
-      #mat-lista-modulos {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
-        align-items: start;
-      }
-      #mat-lista-modulos .module-card { margin-bottom: 0; }
+
 
       /* lista-cards em 2 colunas no tablet */
       #lista-listas-cards {
@@ -794,12 +787,10 @@
       /* Video items: limitar largura da lista para não esticar demais */
       #lista-videos, #mat-lista-aulas { max-width: 820px; }
 
-      /* module cards mantêm 2 colunas no desktop; 3 colunas em telas largas */
-      #mat-lista-modulos {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      /* mi-thumb fica no topo do card — sem override de video-thumb necessário */
+      /* mi-wrap: layout horizontal no desktop — thumb à esquerda, corpo à direita */
+      .mi-wrap { flex-direction: row; align-items: flex-start; }
+      .mi-thumb { width: 140px; min-width: 140px; aspect-ratio: 16/9; flex-shrink: 0; }
+      .mi-body { padding: 10px 12px; }
 
       /* Config data buttons em 2 colunas */
       .config-btn-grid {
@@ -810,10 +801,7 @@
       .config-btn-grid .config-btn { margin-bottom: 0; }
     }
 
-    /* ===== WIDE DESKTOP (≥ 1280px) ===== */
-    @media (min-width: 1280px) {
-      #mat-lista-modulos { grid-template-columns: repeat(3, 1fr); }
-    }
+
   </style>
 </head>
 <body>
