@@ -229,6 +229,12 @@
       display: block; text-decoration: none;
       border-radius: 0;
     }
+
+    /* thumbnail menor em telas muito pequenas */
+    @media (max-width: 360px) {
+      .video-thumb { width: 88px; min-width: 88px; height: 50px; }
+      .video-titulo { font-size: 0.76rem; }
+    }
     .video-thumb:hover { opacity: 0.85; }
     .video-thumb img {
       width: 100%; height: 100%; object-fit: cover;
@@ -295,6 +301,172 @@
       transition: width 0.4s ease;
     }
     .progress-fill.complete { background: linear-gradient(90deg, var(--positivo), #4ade80); }
+
+    .tab-bar {
+      display: flex; gap: 8px; margin-top: 18px; margin-bottom: 18px;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; padding-bottom: 2px;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex-shrink: 0; border: 1.5px solid var(--border);
+      background: var(--bg-card); color: var(--text);
+      border-radius: 999px; padding: 9px 18px; font-size: 0.88rem;
+      font-weight: 800; cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .tab-btn.active {
+      border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb),0.08);
+    }
+
+    .content-tab { display: none; }
+    .content-tab.active { display: block; }
+
+    .intro-box {
+      background: var(--bg-input); border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); padding: 14px 16px; color: var(--text);
+      line-height: 1.7; margin-top: 10px;
+      white-space: pre-wrap;
+    }
+
+    .module-card {
+      background: var(--bg-card); border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); padding: 16px;
+      margin-bottom: 16px; box-shadow: var(--shadow);
+    }
+    .module-card-header {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .module-card-header-top {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
+    }
+    .module-card-title {
+      font-size: 0.95rem; font-weight: 900; line-height: 1.35;
+      flex: 1; min-width: 0;
+    }
+    .module-card-meta {
+      font-size: 0.78rem; color: var(--text-muted); font-weight: 700; margin-top: 2px;
+    }
+    .module-card-actions { display: flex; gap: 6px; align-items: center; }
+
+    /* colapso de módulo */
+    .module-card.collapsed .module-card-items { display: none; }
+    .module-card.collapsed .module-card-progress { display: none; }
+    .mod-collapse-btn {
+      width: 28px; height: 28px; flex-shrink: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1.5px solid var(--border); border-radius: 6px;
+      background: var(--bg-input); color: var(--text-muted);
+      cursor: pointer; transition: transform 0.2s, background 0.15s;
+    }
+    .mod-collapse-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .module-card.collapsed .mod-collapse-btn { transform: rotate(-90deg); }
+    .module-card.is-current .module-card-header-top { border-left: 3px solid var(--accent); padding-left: 11px; }
+
+    .module-item {
+      border-top: 1px solid var(--border); padding: 14px 0;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .module-item:first-child { border-top: none; }
+    .module-item.completed .module-item-title { text-decoration: line-through; }
+    .module-item-icon {
+      width: 34px; min-width: 34px; height: 34px;
+      border-radius: 12px; background: rgba(var(--accent-rgb),0.08);
+      display: grid; place-items: center;
+    }
+    .module-item-icon svg { width: 18px; height: 18px; stroke: var(--accent); }
+    .module-item-body { flex: 1; }
+    .module-item-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
+    .module-item-subtitle { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px; }
+    .module-item-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+    .module-item-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .module-items { margin-top: 12px; overflow: hidden; border-radius: var(--radius-sm); border: 1.5px solid var(--border); }
+    .module-items .mod-item-wrap {
+      border-bottom: 3px solid var(--bg-input);
+      position: relative;
+    }
+    .module-items .mod-item-wrap:last-child { border-bottom: none; }
+    .mod-item-wrap.item-done { background: rgba(0,200,151,0.06); }
+    .mod-item-wrap.item-done .video-titulo a,
+    .mod-item-wrap.item-done .mi-title { color: var(--text-muted); text-decoration: line-through; opacity: 0.75; }
+
+    /* ===== MODULE ITEM (layout vertical dentro do card) ===== */
+    .mi-wrap { display: flex; flex-direction: column; }
+    .mi-thumb {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--bg-input); overflow: hidden;
+      position: relative; display: block; text-decoration: none;
+      flex-shrink: 0;
+    }
+    .mi-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .mi-thumb-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mi-thumb-placeholder svg { width: 32px; height: 32px; stroke: var(--text-muted); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .mi-watched-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,200,151,0.18);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mi-watched-overlay svg { width: 32px; height: 32px; stroke: var(--positivo); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 1px 4px rgba(0,0,0,0.4)); }
+    .mi-body { padding: 10px 12px 12px; flex: 1; }
+    .mi-title {
+      font-size: 0.88rem; font-weight: 800; line-height: 1.4;
+      color: var(--text); margin-bottom: 4px;
+      word-break: break-word;
+    }
+    .mi-title a { color: inherit; text-decoration: none; }
+    .mi-title a:hover { color: var(--accent); }
+    .mi-sub { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; margin-bottom: 8px; }
+    .mi-actions {
+      display: flex; gap: 6px; align-items: center;
+    }
+    .mi-btn-main {
+      flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      padding: 6px 10px; border-radius: 6px; font-size: 0.78rem;
+      font-weight: 800; border: none; cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mi-btn-main svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .mi-btn-main.success { background: rgba(0,200,151,0.12); color: var(--positivo); }
+    .mi-btn-main.neutral { background: var(--bg-input); color: var(--text-muted); }
+    .mi-btn-icon {
+      width: 32px; height: 32px; flex-shrink: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: none; border-radius: 6px; cursor: pointer;
+      background: var(--bg-input); color: var(--text-muted);
+      font-family: 'Nunito', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mi-btn-icon svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .mi-btn-icon.danger { background: rgba(255,77,109,0.08); color: var(--negativo); }
+    .mi-notas {
+      margin-bottom: 8px;
+      padding: 7px 10px;
+      font-size: 0.72rem; color: var(--text-muted);
+      border-radius: 6px;
+      border: 1px dashed var(--border); font-style: italic;
+      background: rgba(var(--accent-rgb), 0.04);
+      font-weight: 600; line-height: 1.6;
+    }
+
+    .module-item.completed .module-item-icon { background: rgba(34,197,94,0.15); }
+    .module-card .progress-bar { border-radius: 999px; background: var(--bg-input); overflow: hidden; }
+    .article-card h4 {
+      font-size: 0.95rem; font-weight: 900; margin-bottom: 8px;
+    }
+    .article-card p { margin-bottom: 10px; color: var(--text-muted); font-size: 0.86rem; line-height: 1.5; }
+    .article-card .article-meta {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px;
+      font-size: 0.78rem; color: var(--text-muted); font-weight: 700;
+    }
+    .article-card .article-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .article-card .article-actions .btn-sm { margin-top: 2px; }
+
+    .list-conteudo-header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .list-conteudo-header h3 { margin-bottom: 4px; }
 
     /* ===== MODAL ===== */
     .modal-overlay {
@@ -511,6 +683,26 @@
       .cards-grid { grid-template-columns: repeat(4, 1fr); }
       .video-thumb { width: 160px; min-width: 160px; height: 90px; }
       .modal { max-width: 520px; }
+
+      /* module cards em 2 colunas */
+      #mat-lista-modulos {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        align-items: start;
+      }
+      #mat-lista-modulos .module-card { margin-bottom: 0; }
+
+      /* lista-cards em 2 colunas no tablet */
+      #lista-listas-cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      #lista-listas-cards .lista-card { margin-bottom: 0; }
+
+      /* tab-bar: botões sem flex:1 em telas maiores */
+      .tab-btn { flex: none; padding: 9px 22px; }
     }
 
     /* ===== DESKTOP (≥ 960px) ===== */
@@ -602,6 +794,13 @@
       /* Video items: limitar largura da lista para não esticar demais */
       #lista-videos, #mat-lista-aulas { max-width: 820px; }
 
+      /* module cards mantêm 2 colunas no desktop; 3 colunas em telas largas */
+      #mat-lista-modulos {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* mi-thumb fica no topo do card — sem override de video-thumb necessário */
+
       /* Config data buttons em 2 colunas */
       .config-btn-grid {
         display: grid;
@@ -609,6 +808,11 @@
         gap: 10px;
       }
       .config-btn-grid .config-btn { margin-bottom: 0; }
+    }
+
+    /* ===== WIDE DESKTOP (≥ 1280px) ===== */
+    @media (min-width: 1280px) {
+      #mat-lista-modulos { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
@@ -642,6 +846,7 @@
   <symbol id="i-trash-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></symbol>
   <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></symbol>
   <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></symbol>
   <symbol id="i-folder-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><polyline points="9 14 12 17 15 14"/></symbol>
   <symbol id="i-log-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
   <symbol id="i-graduation" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
@@ -680,7 +885,7 @@
           <span id="db-pendentes" class="card-value warning">0</span>
         </div>
         <div class="card">
-          <span class="card-label">Assistidas</span>
+          <span class="card-label">Concluídas</span>
           <span id="db-assistidos" class="card-value positivo">0</span>
         </div>
         <div class="card">
@@ -691,7 +896,7 @@
 
       <div class="section-block">
         <h3><svg viewBox="0 0 24 24"><use href="#i-check"/></svg> Progresso geral</h3>
-        <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:6px" id="db-progress-label">0 de 0 aulas assistidas</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:6px" id="db-progress-label">0 de 0 itens concluídos</div>
         <div class="progress-bar" style="height:10px">
           <div class="progress-fill" id="db-progress-bar" style="width:0%"></div>
         </div>
@@ -726,11 +931,20 @@
           <span id="mat-nome-dash"></span>
         </h2>
         <div class="header-btns">
-          <button class="btn-primary" id="btnNovaAulaDash">
+          <button class="btn-secondary" id="btnNovoModuloDash" style="padding:8px 12px">
+            <svg style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><use href="#i-plus"/></svg>
+            Módulo
+          </button>
+          <button class="btn-primary" id="btnNovoAulaDash">
             <svg style="width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><use href="#i-plus"/></svg>
-            Aula
+            Item
           </button>
         </div>
+      </div>
+
+      <div class="tab-bar">
+        <button class="tab-btn active lista-tab-btn" data-tab="modulos" onclick="switchListaTab('modulos')">Módulos</button>
+        <button class="tab-btn lista-tab-btn" data-tab="conteudo" onclick="switchListaTab('conteudo')">Conteúdo</button>
       </div>
 
       <!-- Dashboard da Lista -->
@@ -744,7 +958,7 @@
           <span id="mat-db-pendentes" class="card-value warning">0</span>
         </div>
         <div class="card">
-          <span class="card-label">Assistidas</span>
+          <span class="card-label">Concluídas</span>
           <span id="mat-db-assistidos" class="card-value positivo">0</span>
         </div>
         <div class="card">
@@ -755,16 +969,37 @@
 
       <div class="section-block">
         <h3><svg viewBox="0 0 24 24"><use href="#i-check"/></svg> Progresso da Lista</h3>
-        <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:6px" id="mat-db-progress-label">0 de 0 aulas assistidas</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:6px" id="mat-db-progress-label">0 de 0 itens concluídos</div>
         <div class="progress-bar" style="height:10px">
           <div class="progress-fill" id="mat-db-progress-bar" style="width:0%"></div>
         </div>
       </div>
 
-      <!-- Lista de aulas da Lista -->
-      <div class="section-block" style="padding:10px 12px">
-        <h3><svg viewBox="0 0 24 24"><use href="#i-youtube"/></svg> Aulas</h3>
-        <div id="mat-lista-aulas"></div>
+      <div id="mat-lista-modulos-container" class="content-tab active">
+        <!-- Módulos da Lista -->
+        <div class="section-block" style="padding:10px 12px">
+          <h3><svg viewBox="0 0 24 24"><use href="#i-book"/></svg> Estrutura por módulos</h3>
+          <div id="mat-lista-modulos"></div>
+        </div>
+      </div>
+
+      <div id="mat-lista-conteudo-container" class="content-tab">
+        <!-- Conteúdo da Lista -->
+        <div class="section-block" style="padding:10px 12px">
+          <div class="list-conteudo-header" style="justify-content:space-between;align-items:flex-start;gap:10px">
+            <h3><svg viewBox="0 0 24 24"><use href="#i-note"/></svg> Conteúdo</h3>
+            <button class="btn-secondary" onclick="editarIntroducao()">Editar introdução</button>
+          </div>
+          <div id="mat-introducao-text" class="intro-box" style="margin-top:14px">Nenhuma introdução definida ainda.</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:18px;margin-bottom:10px">
+            <h4 style="font-size:1rem;font-weight:900;margin:0">Artigos recomendados</h4>
+            <button class="btn-primary" onclick="abrirModal('Adicionar artigo', formItem({ tipo: 'artigo' }, listaAtualId, ensureListaModulo(listaAtualId)?.id || 'null'))">
+              <svg style="width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><use href="#i-plus"/></svg>
+              Adicionar artigo
+            </button>
+          </div>
+          <div id="mat-lista-artigos"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -922,6 +1157,7 @@
 // ================================================================
 let dados = { videos: [], listas: [] };
 let listaAtualId = null; // Lista aberta no sub-dashboard
+let listaAtualTab = 'aulas'; // Aba ativa na dashboard da lista
 
 // ================================================================
 // UTILITÁRIOS
@@ -1072,8 +1308,134 @@ function carregarLocal() {
           delete v.materiaId;
         }
       });
+      normalizarListas(dados.listas, dados.videos);
+      dados.videos = [];
     }
   } catch {}
+}
+
+function normalizarListas(listas, videos = []) {
+  if (!Array.isArray(listas)) return;
+  listas.forEach(m => {
+    if (m.introducao == null) m.introducao = '';
+    if (!Array.isArray(m.artigos)) m.artigos = [];
+    if (!Array.isArray(m.modulos)) m.modulos = [];
+
+    const legacyVideos = Array.isArray(videos) ? videos.filter(v => v.listaId === m.id) : [];
+
+    if (m.modulos.length === 0) {
+      m.modulos = [{ id: 1, nome: 'Módulo 1', ordem: 1, itens: [] }];
+    }
+    m.modulos.forEach((mod, index) => {
+      if (!Array.isArray(mod.itens)) mod.itens = [];
+      if (mod.id == null) mod.id = index + 1;
+      if (mod.ordem == null) mod.ordem = index + 1;
+      mod.itens.forEach(normalizeItem);
+    });
+
+    const firstModulo = m.modulos[0];
+
+    if (Array.isArray(m.artigos) && m.artigos.length > 0) {
+      m.artigos.forEach(a => {
+        firstModulo.itens.push({
+          id: gerarId(firstModulo.itens),
+          tipo: 'artigo',
+          titulo: a.titulo || '',
+          url: a.url || '',
+          resumo: a.resumo || '',
+          lido: !!a.lido,
+          dataAdicionado: a.dataAdicionado || hoje(),
+          dataLido: a.dataLido || (a.lido ? hoje() : null),
+          listaId: m.id
+        });
+      });
+      m.artigos = [];
+    }
+
+    if (legacyVideos.length > 0) {
+      legacyVideos.forEach(v => {
+        firstModulo.itens.push({
+          id: gerarId(firstModulo.itens),
+          tipo: 'video',
+          url: v.url || '',
+          titulo: v.titulo || v.url || '',
+          canal: v.canal || '',
+          videoId: v.videoId || extrairVideoId(v.url) || null,
+          duracao: v.duracao || '',
+          notas: v.notas || '',
+          assistido: !!v.assistido,
+          dataAdicionado: v.dataAdicionado || hoje(),
+          dataAssistido: v.dataAssistido || (v.assistido ? hoje() : null),
+          listaId: m.id
+        });
+      });
+    }
+  });
+}
+
+function normalizeItem(item) {
+  if (!item || typeof item !== 'object') return;
+  if (!item.tipo) item.tipo = 'video';
+  item.titulo = item.titulo || '';
+  item.url = item.url || '';
+  if (item.tipo === 'video') {
+    item.canal = item.canal || '';
+    item.videoId = item.videoId || extrairVideoId(item.url) || null;
+    item.duracao = item.duracao || '';
+    item.notas = item.notas || '';
+    item.assistido = !!item.assistido;
+    item.dataAdicionado = item.dataAdicionado || hoje();
+    item.dataAssistido = item.dataAssistido || (item.assistido ? hoje() : null);
+  } else if (item.tipo === 'artigo') {
+    item.resumo = item.resumo || '';
+    item.lido = !!item.lido;
+    item.dataAdicionado = item.dataAdicionado || hoje();
+    item.dataLido = item.dataLido || (item.lido ? hoje() : null);
+  } else if (item.tipo === 'texto') {
+    item.conteudo = item.conteudo || '';
+    item.concluido = !!item.concluido;
+    item.dataAdicionado = item.dataAdicionado || hoje();
+    item.dataConcluido = item.dataConcluido || (item.concluido ? hoje() : null);
+  }
+}
+
+function getListaModulos(listaId) {
+  const m = dados.listas.find(x => x.id === Number(listaId));
+  if (!m) return [];
+  return [...(m.modulos || [])].sort((a, b) => a.ordem - b.ordem);
+}
+
+function getListaItens(listaId) {
+  return getListaModulos(listaId).flatMap(mod => mod.itens || []);
+}
+
+function getAllItens() {
+  return dados.listas.flatMap(l => getListaItens(l.id));
+}
+
+function getAllVideos() {
+  return getAllItens().filter(i => i.tipo === 'video');
+}
+
+function isItemConcluido(item) {
+  if (!item || !item.tipo) return false;
+  if (item.tipo === 'video') return !!item.assistido;
+  if (item.tipo === 'artigo') return !!item.lido;
+  return !!item.concluido;
+}
+
+function itemIcon(type) {
+  if (type === 'video') return 'i-youtube';
+  if (type === 'artigo') return 'i-link';
+  if (type === 'texto') return 'i-note';
+  return 'i-book';
+}
+
+function itemTypeLabel(type) {
+  if (type === 'video') return 'Vídeo';
+  if (type === 'artigo') return 'Artigo';
+  if (type === 'texto') return 'Texto';
+  return 'Item';
 }
 
 // ================================================================
@@ -1155,9 +1517,11 @@ function mostrarInicio() {
 
 function mostrarlista(listaId) {
   listaAtualId = listaId;
+  listaAtualTab = 'modulos';
   document.getElementById('dash-inicio').style.display = 'none';
   document.getElementById('dash-lista').classList.add('active');
   renderDashboardlista(listaId);
+  switchListaTab('modulos');
 }
 
 document.getElementById('btnVoltarDash').addEventListener('click', () => {
@@ -1167,16 +1531,17 @@ document.getElementById('btnVoltarDash').addEventListener('click', () => {
 });
 
 function renderDashboardGeral() {
-  const total = dados.videos.length;
-  const assistidos = dados.videos.filter(v => v.assistido).length;
-  const pendentes = total - assistidos;
-  const pct = total > 0 ? Math.round((assistidos / total) * 100) : 0;
+  const itens = getAllItens();
+  const total = itens.length;
+  const concluido = itens.filter(isItemConcluido).length;
+  const pendentes = total - concluido;
+  const pct = total > 0 ? Math.round((concluido / total) * 100) : 0;
 
   document.getElementById('db-total').textContent = total;
   document.getElementById('db-pendentes').textContent = pendentes;
-  document.getElementById('db-assistidos').textContent = assistidos;
+  document.getElementById('db-assistidos').textContent = concluido;
   document.getElementById('db-pct').textContent = pct + '%';
-  document.getElementById('db-progress-label').textContent = `${assistidos} de ${total} aula${total !== 1 ? 's' : ''} assistida${assistidos !== 1 ? 's' : ''}`;
+  document.getElementById('db-progress-label').textContent = `${concluido} de ${total} item${total !== 1 ? 's' : ''} concluído${concluido !== 1 ? 's' : ''}`;
   const bar = document.getElementById('db-progress-bar');
   bar.style.width = pct + '%';
   bar.className = 'progress-fill' + (pct >= 100 ? ' complete' : '');
@@ -1191,19 +1556,19 @@ function renderDashboardGeral() {
     return;
   }
   el.innerHTML = dados.listas.map(m => {
-    const aulas = dados.videos.filter(v => v.listaId === m.id);
-    const ast = aulas.filter(v => v.assistido).length;
-    const tot = aulas.length;
-    const p = tot > 0 ? Math.round((ast / tot) * 100) : 0;
+    const itens = getListaItens(m.id);
+    const concluidos = itens.filter(isItemConcluido).length;
+    const tot = itens.length;
+    const p = tot > 0 ? Math.round((concluidos / tot) * 100) : 0;
     return `<div class="lista-card" onclick="mostrarlista(${m.id})">
       <div class="lista-card-icon" style="background:rgba(var(--accent-rgb),0.1)">${sanitizar(m.emoji || '📚')}</div>
       <div class="lista-card-info">
         <div class="lista-card-nome">${sanitizar(m.nome)}</div>
         <div class="lista-card-stats">
-          <span>${tot} aula${tot !== 1 ? 's' : ''}</span>
+          <span>${tot} item${tot !== 1 ? 's' : ''}</span>
           <span>·</span>
-          <span style="color:var(--positivo)">${ast} assistida${ast !== 1 ? 's' : ''}</span>
-          ${tot > 0 ? `<span>·</span><span style="color:var(--warning)">${tot - ast} pendente${(tot-ast) !== 1 ? 's' : ''}</span>` : ''}
+          <span style="color:var(--positivo)">${concluidos} concluído${concluidos !== 1 ? 's' : ''}</span>
+          ${tot > 0 ? `<span>·</span><span style="color:var(--warning)">${tot - concluidos} pendente${(tot-concluidos) !== 1 ? 's' : ''}</span>` : ''}
         </div>
       </div>
       <div class="lista-card-prog">
@@ -1228,42 +1593,579 @@ function renderDashboardlista(listaId) {
   document.getElementById('mat-emoji-dash').textContent = m.emoji || '📚';
   document.getElementById('mat-nome-dash').textContent = m.nome;
 
-  const aulas = dados.videos.filter(v => v.listaId === listaId);
-  const ast = aulas.filter(v => v.assistido).length;
-  const tot = aulas.length;
-  const pend = tot - ast;
-  const pct = tot > 0 ? Math.round((ast / tot) * 100) : 0;
+  const itens = getListaItens(listaId);
+  const concluidos = itens.filter(isItemConcluido).length;
+  const tot = itens.length;
+  const pend = tot - concluidos;
+  const pct = tot > 0 ? Math.round((concluidos / tot) * 100) : 0;
 
   document.getElementById('mat-db-total').textContent = tot;
   document.getElementById('mat-db-pendentes').textContent = pend;
-  document.getElementById('mat-db-assistidos').textContent = ast;
+  document.getElementById('mat-db-assistidos').textContent = concluidos;
   document.getElementById('mat-db-pct').textContent = pct + '%';
-  document.getElementById('mat-db-progress-label').textContent = `${ast} de ${tot} aula${tot !== 1 ? 's' : ''} assistida${ast !== 1 ? 's' : ''}`;
+  document.getElementById('mat-db-progress-label').textContent = `${concluidos} de ${tot} item${tot !== 1 ? 's' : ''} concluído${concluidos !== 1 ? 's' : ''}`;
   const bar = document.getElementById('mat-db-progress-bar');
   bar.style.width = pct + '%';
   bar.className = 'progress-fill' + (pct >= 100 ? ' complete' : '');
 
-  // Listar aulas
-  const listaEl = document.getElementById('mat-lista-aulas');
-  if (aulas.length === 0) {
+  renderListaModulos(listaId);
+  if (listaAtualTab === 'conteudo') renderDashboardListaConteudo(listaId);
+}
+
+function getModulosCollapseState(listaId) {
+  try { return JSON.parse(localStorage.getItem(`modulosCollapsed_${listaId}`)) || {}; } catch { return {}; }
+}
+function setModuloCollapse(listaId, modId, collapsed) {
+  const s = getModulosCollapseState(listaId);
+  s[modId] = collapsed;
+  localStorage.setItem(`modulosCollapsed_${listaId}`, JSON.stringify(s));
+}
+
+function renderListaModulos(listaId) {
+  const modulos = getListaModulos(listaId);
+  const listaEl = document.getElementById('mat-lista-modulos');
+  if (modulos.length === 0) {
     listaEl.innerHTML = `<div class="empty-state" style="padding:20px 10px">
-      <div class="empty-state-icon"><svg viewBox="0 0 24 24"><use href="#i-youtube"/></svg></div>
-      <div>Nenhuma aula ainda.<br>Clique em <strong>+ Aula</strong> para adicionar!</div>
+      <div class="empty-state-icon"><svg viewBox="0 0 24 24"><use href="#i-book"/></svg></div>
+      <div>Nenhum módulo criado ainda.<br>Clique em <strong>Adicionar módulo</strong> para começar!</div>
     </div>`;
     return;
   }
-  // Pendentes primeiro, depois por data
-  const sorted = [...aulas].sort((a, b) => {
-    if (a.assistido !== b.assistido) return a.assistido ? 1 : -1;
-    return (b.dataAdicionado || '').localeCompare(a.dataAdicionado || '');
+
+  const state = getModulosCollapseState(listaId);
+  // módulo atual = primeiro com algum item pendente
+  const currentMod = modulos.find(m => (m.itens || []).some(i => !isItemConcluido(i)));
+
+  // define estado inicial para cada módulo (só quando ainda não foi definido pelo usuário)
+  modulos.forEach(mod => {
+    if (state[mod.id] === undefined) {
+      const allDone = (mod.itens || []).length > 0 && (mod.itens || []).every(isItemConcluido);
+      const isCurrent = currentMod && mod.id === currentMod.id;
+      state[mod.id] = allDone && !isCurrent; // colapsa se 100% e não é o atual
+    }
   });
-  listaEl.innerHTML = sorted.map(v => renderVideoItem(v)).join('');
+  localStorage.setItem(`modulosCollapsed_${listaId}`, JSON.stringify(state));
+
+  listaEl.innerHTML = modulos.map(mod => {
+    const isCurrent = currentMod && mod.id === currentMod.id;
+    return renderModuloCard(mod, listaId, state[mod.id], isCurrent);
+  }).join('');
 }
 
-// Botão nova aula dentro do dashboard da Lista
-document.getElementById('btnNovaAulaDash').addEventListener('click', () => {
+function renderModuloCard(mod, listaId, collapsed, isCurrent) {
+  const itens = mod.itens || [];
+  const concluido = itens.filter(isItemConcluido).length;
+  const tot = itens.length;
+  const pct = tot > 0 ? Math.round((concluido / tot) * 100) : 0;
+  // quando chamado do toggleItemConcluido sem estado, recalcula
+  if (collapsed === undefined) {
+    const state = getModulosCollapseState(listaId);
+    collapsed = !!state[mod.id];
+  }
+  // pendentes primeiro, concluídos no fundo
+  const sorted = [
+    ...itens.filter(i => !isItemConcluido(i)),
+    ...itens.filter(i => isItemConcluido(i))
+  ];
+  return `
+    <div class="module-card${collapsed ? ' collapsed' : ''}${isCurrent ? ' is-current' : ''}" id="mod-${mod.id}">
+      <div class="module-card-header">
+        <div class="module-card-header-top">
+          <div style="flex:1;min-width:0">
+            <div class="module-card-title">${sanitizar(mod.nome)}</div>
+            <div class="module-card-meta">${tot} item${tot !== 1 ? 's' : ''} · ${concluido} concluído${concluido !== 1 ? 's' : ''}${pct >= 100 && tot > 0 ? ' · <span style="color:var(--positivo)">✓ Completo</span>' : ''}</div>
+          </div>
+          <button class="mod-collapse-btn" onclick="toggleModuloCollapse(${mod.id}, ${listaId})" title="${collapsed ? 'Expandir' : 'Recolher'} módulo">
+            <svg viewBox="0 0 24 24"><use href="#i-chevron-down"/></svg>
+          </button>
+        </div>
+        <div class="module-card-actions">
+          <button class="btn-sm" onclick="abrirModal('Adicionar item', formItem(null, ${listaId}, ${mod.id}))">Adicionar item</button>
+          <button class="btn-sm" onclick="editarModulo(${mod.id}, ${listaId})">Editar</button>
+        </div>
+      </div>
+      <div class="module-card-progress">
+        <div class="progress-bar" style="height:8px;margin:10px 0">
+          <div class="progress-fill${pct >= 100 ? ' complete' : ''}" style="width:${pct}%"></div>
+        </div>
+      </div>
+      <div class="module-card-items">
+        <div class="module-items">${sorted.map(item => `<div class="mod-item-wrap${isItemConcluido(item) ? ' item-done' : ''}">${renderModuloItem(item, listaId, mod.id)}</div>`).join('')}</div>
+      </div>
+    </div>
+  `;
+}
+
+function toggleModuloCollapse(modId, listaId) {
+  const state = getModulosCollapseState(listaId);
+  state[modId] = !state[modId];
+  localStorage.setItem(`modulosCollapsed_${listaId}`, JSON.stringify(state));
+  const modEl = document.getElementById(`mod-${modId}`);
+  if (modEl) modEl.classList.toggle('collapsed', state[modId]);
+  // atualiza tooltip do botão
+  const btn = modEl && modEl.querySelector('.mod-collapse-btn');
+  if (btn) btn.title = state[modId] ? 'Expandir módulo' : 'Recolher módulo';
+}
+
+function renderModuloItem(item, listaId, modId) {
+  const done = isItemConcluido(item);
+
+  if (item.tipo === 'video') {
+    const thumb = item.videoId ? thumbUrl(item.videoId) : null;
+    const url = item.url || '';
+    const titulo = sanitizar(item.titulo || url);
+    return `
+      <div class="mi-wrap" id="item-${item.id}">
+        <a class="mi-thumb" href="${url}" target="_blank" rel="noopener noreferrer" title="Abrir no YouTube">
+          ${thumb
+            ? `<img src="${thumb}" loading="lazy" alt="" onerror="this.parentElement.innerHTML='<div class=mi-thumb-placeholder><svg viewBox=\\'0 0 24 24\\'><use href=\\'#i-play\\'/></svg></div>'">`
+            : `<div class="mi-thumb-placeholder"><svg viewBox="0 0 24 24"><use href="#i-play"/></svg></div>`}
+          ${done ? `<div class="mi-watched-overlay"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></div>` : ''}
+        </a>
+        <div class="mi-body">
+          <div class="mi-title"><a href="${url}" target="_blank" rel="noopener noreferrer">${titulo}</a></div>
+          ${item.canal ? `<div class="mi-sub">${sanitizar(item.canal)}</div>` : ''}
+          ${item.notas ? `<div class="mi-notas">${sanitizar(item.notas)}</div>` : ''}
+          <div class="mi-actions">
+            <button class="mi-btn-main ${done ? 'neutral' : 'success'}" onclick="toggleItemConcluido(${item.id}, ${modId}, ${listaId})">
+              <svg viewBox="0 0 24 24"><use href="#i-${done ? 'eye-off' : 'check'}"/></svg>
+              ${done ? 'Desmarcar' : 'Assistido'}
+            </button>
+            <button class="mi-btn-icon" onclick="editarItem(${item.id}, ${modId}, ${listaId})" title="Editar">
+              <svg viewBox="0 0 24 24"><use href="#i-pencil"/></svg>
+            </button>
+            <button class="mi-btn-icon danger" onclick="excluirItem(${item.id}, ${modId}, ${listaId})" title="Excluir">
+              <svg viewBox="0 0 24 24"><use href="#i-trash"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  if (item.tipo === 'artigo') {
+    const url = (item.url || '').trim();
+    const titulo = sanitizar(item.titulo || url || 'Artigo sem título');
+    const resumo = sanitizar(item.resumo || '');
+    return `
+      <div class="mi-wrap" id="item-${item.id}">
+        <a class="mi-thumb" ${url ? `href="${url}" target="_blank" rel="noopener noreferrer"` : ''} style="background:rgba(var(--accent-rgb),0.07)">
+          <div class="mi-thumb-placeholder">
+            <svg viewBox="0 0 24 24"><use href="#i-link"/></svg>
+          </div>
+          ${done ? `<div class="mi-watched-overlay"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></div>` : ''}
+        </a>
+        <div class="mi-body">
+          <div class="mi-title">${url ? `<a href="${url}" target="_blank" rel="noopener noreferrer">${titulo}</a>` : titulo}</div>
+          <div class="mi-sub">Artigo</div>
+          ${resumo ? `<div class="mi-notas">${resumo}</div>` : ''}
+          <div class="mi-actions">
+            <button class="mi-btn-main ${done ? 'neutral' : 'success'}" onclick="toggleItemConcluido(${item.id}, ${modId}, ${listaId})">
+              <svg viewBox="0 0 24 24"><use href="#i-${done ? 'eye-off' : 'check'}"/></svg>
+              ${done ? 'Desmarcar' : 'Lido'}
+            </button>
+            <button class="mi-btn-icon" onclick="editarItem(${item.id}, ${modId}, ${listaId})" title="Editar">
+              <svg viewBox="0 0 24 24"><use href="#i-pencil"/></svg>
+            </button>
+            <button class="mi-btn-icon danger" onclick="excluirItem(${item.id}, ${modId}, ${listaId})" title="Excluir">
+              <svg viewBox="0 0 24 24"><use href="#i-trash"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // tipo === 'texto'
+  return `
+    <div class="module-item ${done ? 'completed' : ''}" id="item-${item.id}" style="padding:14px 12px;">
+      <div class="module-item-icon"><svg viewBox="0 0 24 24"><use href="#i-note"/></svg></div>
+      <div class="module-item-body">
+        <div class="module-item-title">${sanitizar(item.titulo || 'Texto')}</div>
+        ${item.conteudo ? `<div class="module-item-desc">${sanitizar(item.conteudo)}</div>` : ''}
+        <div class="mi-actions" style="margin-top:8px">
+          <button class="mi-btn-main ${done ? 'neutral' : 'success'}" onclick="toggleItemConcluido(${item.id}, ${modId}, ${listaId})">
+            <svg viewBox="0 0 24 24"><use href="#i-${done ? 'eye-off' : 'check'}"/></svg>
+            ${done ? 'Desmarcar' : 'Concluído'}
+          </button>
+          <button class="mi-btn-icon" onclick="editarItem(${item.id}, ${modId}, ${listaId})">
+            <svg viewBox="0 0 24 24"><use href="#i-pencil"/></svg>
+          </button>
+          <button class="mi-btn-icon danger" onclick="excluirItem(${item.id}, ${modId}, ${listaId})">
+            <svg viewBox="0 0 24 24"><use href="#i-trash"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function switchListaTab(tab) {
+  listaAtualTab = tab;
+  document.querySelectorAll('.lista-tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
+  document.getElementById('mat-lista-modulos-container').classList.toggle('active', tab === 'modulos');
+  document.getElementById('mat-lista-conteudo-container').classList.toggle('active', tab === 'conteudo');
+  if (tab === 'conteudo' && listaAtualId) renderDashboardListaConteudo(listaAtualId);
+}
+
+function renderDashboardListaConteudo(listaId) {
+  const m = dados.listas.find(x => x.id === listaId);
+  if (!m) return;
+  const artigos = getListaItens(listaId).filter(i => i.tipo === 'artigo');
+  const introducao = (m.introducao || '').trim();
+  const introducaoText = document.getElementById('mat-introducao-text');
+  introducaoText.textContent = introducao || 'Nenhuma introdução definida ainda.';
+
+  const listaArtigos = document.getElementById('mat-lista-artigos');
+  if (artigos.length === 0) {
+    listaArtigos.innerHTML = `<div class="empty-state" style="padding:20px 10px">
+      <div class="empty-state-icon"><svg viewBox="0 0 24 24"><use href="#i-note"/></svg></div>
+      <div>Nenhum artigo adicionado ainda.<br>Clique em <strong>Adicionar artigo</strong> para começar!</div>
+    </div>`;
+  } else {
+    const modulos = getListaModulos(listaId);
+    listaArtigos.innerHTML = artigos.map(a => {
+      const mod = modulos.find(m => (m.itens || []).some(i => i.id === a.id));
+      return renderArtigoItem(a, listaId, mod?.id);
+    }).join('');
+  }
+}
+
+function findModulo(listaId, moduloId) {
+  const lista = dados.listas.find(x => x.id === Number(listaId));
+  if (!lista || !Array.isArray(lista.modulos)) return null;
+  return lista.modulos.find(m => m.id === Number(moduloId));
+}
+
+function findItem(listaId, moduloId, itemId) {
+  const mod = findModulo(listaId, moduloId);
+  if (!mod) return null;
+  return mod.itens.find(i => i.id === Number(itemId));
+}
+
+function findItemLocation(itemId) {
+  for (const lista of dados.listas) {
+    if (!Array.isArray(lista.modulos)) continue;
+    for (const modulo of lista.modulos) {
+      if (!Array.isArray(modulo.itens)) continue;
+      const item = modulo.itens.find(i => i.id === Number(itemId));
+      if (item) return { lista, modulo, item };
+    }
+  }
+  return null;
+}
+
+function ensureListaModulo(listaId) {
+  const lista = dados.listas.find(x => x.id === Number(listaId));
+  if (!lista) return null;
+  if (!Array.isArray(lista.modulos)) lista.modulos = [];
+  if (lista.modulos.length === 0) {
+    lista.modulos.push({ id: 1, nome: 'Módulo 1', ordem: 1, itens: [] });
+    salvarLocal();
+  }
+  return lista.modulos[0];
+}
+
+function formModulo(listaId, modulo = null) {
+  const nome = modulo ? sanitizar(modulo.nome) : '';
+  return `
+    <form onsubmit="salvarModulo(event, ${listaId}, ${modulo ? modulo.id : 'null'})">
+      <div class="form-group">
+        <label>Nome do módulo</label>
+        <input type="text" id="fModuloNome" value="${nome}" placeholder="Ex: Fundamentos" required>
+      </div>
+      <button type="submit" class="btn-submit">${modulo ? 'Salvar módulo' : 'Criar módulo'}</button>
+    </form>
+  `;
+}
+
+function salvarModulo(e, listaId, moduloId) {
+  e.preventDefault();
+  const nome = (document.getElementById('fModuloNome').value || '').trim();
+  if (!nome) { toast('Informe o nome do módulo'); return; }
+  const lista = dados.listas.find(x => x.id === Number(listaId));
+  if (!lista) { toast('Lista não encontrada'); return; }
+  if (!Array.isArray(lista.modulos)) lista.modulos = [];
+
+  if (moduloId !== null && moduloId !== 'null') {
+    const modulo = lista.modulos.find(m => m.id === Number(moduloId));
+    if (!modulo) return;
+    modulo.nome = nome;
+    toast('Módulo atualizado!');
+  } else {
+    lista.modulos.push({
+      id: gerarId(lista.modulos),
+      nome,
+      ordem: lista.modulos.length + 1,
+      itens: []
+    });
+    toast('Módulo criado!');
+  }
+  salvarLocal();
+  renderDashboardlista(listaId);
+  if (listaAtualTab === 'modulos') renderListaModulos(listaId);
+  fecharModal();
+}
+
+function formItem(item = null, listaId = null, moduloId = null) {
+  const tipo = item?.tipo || 'video';
+  const titulo = sanitizar(item?.titulo || '');
+  const url = sanitizar(item?.url || '');
+  const canal = sanitizar(item?.canal || '');
+  const duracao = sanitizar(item?.duracao || '');
+  const resumo = sanitizar(item?.resumo || '');
+  const conteudo = sanitizar(item?.conteudo || '');
+  const lido = item?.lido ? 'checked' : '';
+  const assistido = item?.assistido ? 'checked' : '';
+  const modulos = getListaModulos(listaId);
+
+  const modOptions = modulos.map(m => `<option value="${m.id}" ${m.id === moduloId ? 'selected' : ''}>${sanitizar(m.nome)}</option>`).join('');
+  return `
+    <form onsubmit="salvarItem(event, ${item ? item.id : 'null'}, ${listaId}, ${moduloId})">
+      <div class="form-group">
+        <label>Tipo de item</label>
+        <select id="fItemTipo" onchange="toggleItemTypeFields(this.value)">
+          <option value="video" ${tipo === 'video' ? 'selected' : ''}>Vídeo</option>
+          <option value="artigo" ${tipo === 'artigo' ? 'selected' : ''}>Artigo</option>
+          <option value="texto" ${tipo === 'texto' ? 'selected' : ''}>Texto</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Título</label>
+        <input type="text" id="fItemTitulo" value="${titulo}" placeholder="Título do item" required>
+      </div>
+      <div class="form-group tipo-video tipo-artigo" style="display:${tipo === 'video' || tipo === 'artigo' ? 'block' : 'none'}">
+        <label>URL</label>
+        <input type="url" id="fItemUrl" value="${url}" placeholder="https://...">
+      </div>
+      <div class="form-group tipo-video" style="display:${tipo === 'video' ? 'block' : 'none'}">
+        <label>Canal</label>
+        <input type="text" id="fItemCanal" value="${canal}" placeholder="Canal/professor">
+      </div>
+      <div class="form-group tipo-video" style="display:${tipo === 'video' ? 'block' : 'none'}">
+        <label>Duração</label>
+        <input type="text" id="fItemDuracao" value="${duracao}" placeholder="12:34">
+      </div>
+      <div class="form-group tipo-artigo" style="display:${tipo === 'artigo' ? 'block' : 'none'}">
+        <label>Resumo</label>
+        <textarea id="fItemResumo" style="min-height:90px">${resumo}</textarea>
+      </div>
+      <div class="form-group tipo-texto" style="display:${tipo === 'texto' ? 'block' : 'none'}">
+        <label>Conteúdo</label>
+        <textarea id="fItemConteudo" style="min-height:120px">${conteudo}</textarea>
+      </div>
+      ${item ? `<div class="form-group tipo-video" style="display:${tipo === 'video' ? 'block' : 'none'}">
+        <label><input type="checkbox" id="fItemAssistido" ${assistido}> Assistido</label>
+      </div>
+      <div class="form-group tipo-artigo" style="display:${tipo === 'artigo' ? 'block' : 'none'}">
+        <label><input type="checkbox" id="fItemLido" ${lido}> Lido</label>
+      </div>` : ''}
+      <div class="form-group">
+        <label>Módulo</label>
+        <select id="fItemModulo">${modOptions}</select>
+      </div>
+      <button type="submit" class="btn-submit">${item ? 'Salvar item' : 'Adicionar item'}</button>
+    </form>
+  `;
+}
+
+function toggleItemTypeFields(tipo) {
+  document.querySelectorAll('.tipo-video').forEach(el => el.style.display = tipo === 'video' ? 'block' : 'none');
+  document.querySelectorAll('.tipo-artigo').forEach(el => el.style.display = tipo === 'artigo' ? 'block' : 'none');
+  document.querySelectorAll('.tipo-texto').forEach(el => el.style.display = tipo === 'texto' ? 'block' : 'none');
+}
+
+function salvarItem(e, id, listaId, moduloId) {
+  e.preventDefault();
+  const lista = dados.listas.find(x => x.id === Number(listaId));
+  if (!lista) { toast('Lista não encontrada'); return; }
+  const modulo = findModulo(listaId, moduloId);
+  if (!modulo) { toast('Módulo não encontrado'); return; }
+  const tipo = document.getElementById('fItemTipo').value;
+  const titulo = (document.getElementById('fItemTitulo').value || '').trim();
+  const url = (document.getElementById('fItemUrl')?.value || '').trim();
+  const canal = (document.getElementById('fItemCanal')?.value || '').trim();
+  const duracao = (document.getElementById('fItemDuracao')?.value || '').trim();
+  const resumo = (document.getElementById('fItemResumo')?.value || '').trim();
+  const conteudo = (document.getElementById('fItemConteudo')?.value || '').trim();
+  const assistido = !!document.getElementById('fItemAssistido')?.checked;
+  const lido = !!document.getElementById('fItemLido')?.checked;
+  const targetModuloId = Number(document.getElementById('fItemModulo').value);
+  const targetModulo = findModulo(listaId, targetModuloId);
+  if (!targetModulo) { toast('Módulo não encontrado'); return; }
+  if (!titulo) { toast('Informe o título do item'); return; }
+
+  let item = null;
+  if (id !== null && id !== 'null') {
+    item = findItem(listaId, moduloId, id);
+    if (!item) return;
+    item.tipo = tipo;
+    item.titulo = titulo;
+    item.url = url;
+    item.canal = canal;
+    item.duracao = duracao;
+    item.resumo = resumo;
+    item.conteudo = conteudo;
+    item.assistido = assistido;
+    item.lido = lido;
+    item.listaId = Number(listaId);
+    normalizeItem(item);
+  } else {
+    item = {
+      id: gerarId(targetModulo.itens),
+      tipo,
+      titulo,
+      url,
+      canal,
+      duracao,
+      resumo,
+      conteudo,
+      assistido: tipo === 'video' ? false : undefined,
+      lido: tipo === 'artigo' ? false : undefined,
+      concluido: tipo === 'texto' ? false : undefined,
+      listaId: Number(listaId)
+    };
+    normalizeItem(item);
+    targetModulo.itens.push(item);
+  }
+
+  if (id !== null && id !== 'null' && targetModuloId !== Number(moduloId)) {
+    const origem = findModulo(listaId, moduloId);
+    if (origem) origem.itens = origem.itens.filter(i => i.id !== Number(id));
+    targetModulo.itens.push(item);
+  }
+
+  salvarLocal();
+  renderDashboardlista(listaId);
+  if (listaAtualTab === 'modulos') renderListaModulos(listaId);
+  if (listaAtualTab === 'conteudo') renderDashboardListaConteudo(listaId);
+  fecharModal();
+  toast(`${id !== null && id !== 'null' ? 'Item atualizado' : 'Item adicionado'}!`);
+}
+
+function editarItem(id, moduloId, listaId) {
+  const item = findItem(listaId, moduloId, id);
+  if (!item) return;
+  abrirModal('Editar item', formItem(item, listaId, moduloId));
+  toggleItemTypeFields(item.tipo);
+}
+
+function excluirItem(id, moduloId, listaId) {
+  if (!confirm('Excluir este item?')) return;
+  const mod = findModulo(listaId, moduloId);
+  if (!mod) return;
+  mod.itens = mod.itens.filter(i => i.id !== Number(id));
+  salvarLocal();
+  renderDashboardlista(listaId);
+  if (listaAtualTab === 'modulos') renderListaModulos(listaId);
+  if (listaAtualTab === 'conteudo') renderDashboardListaConteudo(listaId);
+  toast('Item removido');
+}
+
+function toggleItemConcluido(id, moduloId, listaId) {
+  const item = findItem(listaId, moduloId, id);
+  if (!item) return;
+  if (item.tipo === 'video') {
+    item.assistido = !item.assistido;
+    item.dataAssistido = item.assistido ? hoje() : null;
+  } else if (item.tipo === 'artigo') {
+    item.lido = !item.lido;
+    item.dataLido = item.lido ? hoje() : null;
+  } else {
+    item.concluido = !item.concluido;
+    item.dataConcluido = item.concluido ? hoje() : null;
+  }
+  salvarLocal();
+  // auto-colapsa se todos os itens do módulo estão concluídos após a ação
+  const mod = findModulo(listaId, moduloId);
+  if (mod) {
+    const allDone = (mod.itens || []).length > 0 && (mod.itens || []).every(isItemConcluido);
+    if (allDone) setModuloCollapse(listaId, moduloId, true);
+  }
+  // re-renderiza só o card do módulo afetado
+  const modEl = document.getElementById(`mod-${moduloId}`);
+  if (modEl && mod) modEl.outerHTML = renderModuloCard(mod, Number(listaId));
+  renderDashboardlista(listaId);
+  if (listaAtualTab === 'conteudo') renderDashboardListaConteudo(listaId);
+  toast(item.tipo === 'video' ? (item.assistido ? '✅ Assistido' : '🔄 Pendente') :
+        item.tipo === 'artigo' ? (item.lido ? '✅ Lido' : '🔄 Não lido') :
+        (item.concluido ? '✅ Concluído' : '🔄 Não concluído'));
+}
+
+function editarModulo(id, listaId) {
+  const mod = findModulo(listaId, id);
+  if (!mod) return;
+  abrirModal('Editar módulo', formModulo(listaId, mod));
+}
+
+function renderArtigoItem(a, listaId, moduloId) {
+  const lido = !!a.lido;
+  const url = (a.url || '').trim();
+  const titulo = sanitizar(a.titulo || 'Artigo sem título');
+  const resumo = sanitizar(a.resumo || '');
+  const status = lido ? 'Lido' : 'Não lido';
+  return `<div class="article-card" id="art-${a.id}">
+    <div class="article-meta">
+      <strong>${titulo}</strong>
+      <span>${status}</span>
+      ${a.dataAdicionado ? `<span>${sanitizar(a.dataAdicionado)}</span>` : ''}
+    </div>
+    ${url ? `<div style="margin-bottom:10px"><a href="${url}" target="_blank" rel="noopener noreferrer">${sanitizar(url)}</a></div>` : ''}
+    ${resumo ? `<p>${resumo}</p>` : ''}
+    <div class="article-actions">
+      <button class="btn-sm ${lido ? '' : 'success'}" onclick="toggleItemConcluido(${a.id}, ${moduloId}, ${listaId})" title="Marcar como lido">
+        <svg viewBox="0 0 24 24"><use href="#i-${lido ? 'eye-off' : 'check'}"/></svg>
+        ${lido ? 'Marcar não lido' : 'Marcar lido'}
+      </button>
+      <button class="btn-sm" onclick="editarItem(${a.id}, ${moduloId}, ${listaId})" title="Editar artigo">
+        <svg viewBox="0 0 24 24"><use href="#i-pencil"/></svg>
+        Editar
+      </button>
+      <button class="btn-sm danger" onclick="excluirItem(${a.id}, ${moduloId}, ${listaId})" title="Excluir artigo">
+        <svg viewBox="0 0 24 24"><use href="#i-trash"/></svg>
+        Excluir
+      </button>
+    </div>
+  </div>`;
+}
+
+function editarIntroducao() {
   if (!listaAtualId) return;
-  abrirModal('Nova Aula', formVideo(null, listaAtualId));
+  const m = dados.listas.find(x => x.id === listaAtualId);
+  if (!m) return;
+  abrirModal('Editar introdução', `
+    <form onsubmit="salvarIntroducao(event, ${listaAtualId})">
+      <div class="form-group">
+        <label>Introdução da lista</label>
+        <textarea id="fIntroducao" style="min-height:120px">${sanitizar(m.introducao || '')}</textarea>
+      </div>
+      <button type="submit" class="btn-submit">Salvar</button>
+    </form>
+  `);
+}
+
+function salvarIntroducao(e, listaId) {
+  e.preventDefault();
+  const m = dados.listas.find(x => x.id === Number(listaId));
+  if (!m) return;
+  m.introducao = (document.getElementById('fIntroducao').value || '').trim();
+  salvarLocal();
+  renderDashboardlista(listaId);
+  if (listaAtualTab === 'conteudo') renderDashboardListaConteudo(listaId);
+  fecharModal();
+  toast('Introdução salva!');
+}
+
+// Botão novo item dentro do dashboard da Lista
+document.getElementById('btnNovoAulaDash').addEventListener('click', () => {
+  if (!listaAtualId) return;
+  const modulo = ensureListaModulo(listaAtualId);
+  abrirModal('Novo item', formItem(null, listaAtualId, modulo.id));
+});
+
+document.getElementById('btnNovoModuloDash').addEventListener('click', () => {
+  if (!listaAtualId) return;
+  abrirModal('Novo módulo', formModulo(listaAtualId));
 });
 
 // ================================================================
@@ -1283,7 +2185,7 @@ function renderVideos() {
   const matId = document.getElementById('filtrolista').value;
   const busca = (document.getElementById('buscaVideo').value || '').toLowerCase().trim();
 
-  let lista = [...dados.videos].sort((a, b) => {
+  let lista = [...getAllVideos()].sort((a, b) => {
     if (a.assistido !== b.assistido) return a.assistido ? 1 : -1;
     return (b.dataAdicionado || '').localeCompare(a.dataAdicionado || '');
   });
@@ -1354,30 +2256,33 @@ function renderVideoItem(v) {
 }
 
 window.toggleAssistido = function(id) {
-  const v = dados.videos.find(x => x.id === id);
-  if (!v) return;
-  v.assistido = !v.assistido;
-  v.dataAssistido = v.assistido ? hoje() : null;
+  const loc = findItemLocation(id);
+  if (!loc || loc.item.tipo !== 'video') return;
+  const item = loc.item;
+  item.assistido = !item.assistido;
+  item.dataAssistido = item.assistido ? hoje() : null;
   salvarLocal();
   const el = document.getElementById(`vi-${id}`);
-  if (el) el.outerHTML = renderVideoItem(v);
-  // Atualizar dashboards
+  if (el) el.outerHTML = renderVideoItem(item);
   if (document.getElementById('page-dashboard').classList.contains('active')) {
     if (listaAtualId) renderDashboardlista(listaAtualId);
     else renderDashboardGeral();
   }
-  toast(v.assistido ? '✅ Aula assistida!' : '🔄 Marcada como pendente');
+  toast(item.assistido ? '✅ Aula assistida!' : '🔄 Marcada como pendente');
 };
 
 window.editarVideo = function(id) {
-  const v = dados.videos.find(x => x.id === id);
-  if (!v) return;
-  abrirModal('Editar Aula', formVideo(v));
+  const loc = findItemLocation(id);
+  if (!loc || loc.item.tipo !== 'video') return;
+  abrirModal('Editar Aula', formItem(loc.item, loc.lista.id, loc.modulo.id));
+  toggleItemTypeFields('video');
 };
 
 window.excluirVideo = function(id) {
   if (!confirm('Excluir esta aula?')) return;
-  dados.videos = dados.videos.filter(v => v.id !== id);
+  const loc = findItemLocation(id);
+  if (!loc || loc.item.tipo !== 'video') return;
+  loc.modulo.itens = loc.modulo.itens.filter(i => i.id !== id);
   salvarLocal();
   renderVideos();
   if (listaAtualId) renderDashboardlista(listaAtualId);
@@ -1463,29 +2368,41 @@ window.salvarVideo = function(e, id) {
   const assistidoEl = document.getElementById('fAssistido');
 
   if (!url) { toast('Informe a URL do vídeo'); return; }
+  if (!listaId) { toast('Selecione uma lista'); return; }
 
   const videoId = extrairVideoId(url);
+  const modulo = ensureListaModulo(listaId);
+  if (!modulo) { toast('Não foi possível criar um módulo para a lista'); return; }
 
   if (id !== null && id !== undefined) {
-    const v = dados.videos.find(x => x.id === Number(id));
-    if (v) {
-      v.url = url;
-      v.titulo = titulo || url;
-      v.canal = canal;
-      v.listaId = listaId;
-      v.notas = notas;
-      v.videoId = videoId || v.videoId || null;
-      if (assistidoEl) {
-        const era = v.assistido;
-        v.assistido = assistidoEl.checked;
-        if (!era && v.assistido) v.dataAssistido = hoje();
-        if (era && !v.assistido) v.dataAssistido = null;
+    const loc = findItemLocation(id);
+    const item = loc && loc.item && loc.item.tipo === 'video' ? loc.item : null;
+    if (item) {
+      const originalModulo = loc.modulo;
+      if (originalModulo && originalModulo !== modulo) {
+        originalModulo.itens = originalModulo.itens.filter(i => i.id !== id);
+        modulo.itens.push(item);
       }
+      item.tipo = 'video';
+      item.url = url;
+      item.titulo = titulo || url;
+      item.canal = canal;
+      item.listaId = listaId;
+      item.notas = notas;
+      item.videoId = videoId || item.videoId || null;
+      if (assistidoEl) {
+        const era = item.assistido;
+        item.assistido = assistidoEl.checked;
+        if (!era && item.assistido) item.dataAssistido = hoje();
+        if (era && !item.assistido) item.dataAssistido = null;
+      }
+      normalizeItem(item);
     }
     toast('Aula atualizada!');
   } else {
-    dados.videos.push({
-      id: gerarId(dados.videos),
+    modulo.itens.push({
+      id: gerarId(modulo.itens),
+      tipo: 'video',
       url,
       titulo: titulo || url,
       canal,
@@ -1525,12 +2442,12 @@ function renderlistas() {
     return;
   }
   el.innerHTML = dados.listas.map(m => {
-    const qtd = dados.videos.filter(v => v.listaId === m.id).length;
+    const total = getListaItens(m.id).length;
     return `<div class="mat-item">
       <div class="mat-item-left">
         <span style="font-size:1.2rem">${sanitizar(m.emoji||'📚')}</span>
         <span>${sanitizar(m.nome)}</span>
-        <span style="font-size:0.72rem;color:var(--text-muted);font-weight:600">${qtd} aula${qtd!==1?'s':''}</span>
+        <span style="font-size:0.72rem;color:var(--text-muted);font-weight:600">${total} item${total!==1?'s':''}</span>
       </div>
       <button class="btn-sm danger" onclick="excluirlista(${m.id})">
         <svg viewBox="0 0 24 24"><use href="#i-trash"/></svg>
@@ -1545,7 +2462,7 @@ document.getElementById('btnAddlista').addEventListener('click', () => {
   const val = (input.value || '').trim();
   const emoji = (emojiInput.value || '').trim() || '📚';
   if (!val) { toast('Digite o Nome da Lista'); return; }
-  dados.listas.push({ id: gerarId(dados.listas), nome: val, emoji });
+  dados.listas.push({ id: gerarId(dados.listas), nome: val, emoji, introducao: '', artigos: [], modulos: [] });
   salvarLocal();
   input.value = '';
   emojiInput.value = '';
@@ -1565,10 +2482,9 @@ document.getElementById('btnNovalista').addEventListener('click', () => {
 
 window.excluirlista = function(id) {
   const m = dados.listas.find(x => x.id === id);
-  const qtd = dados.videos.filter(v => v.listaId === id).length;
-  if (!confirm(`Excluir a Lista "${m.nome}"?\n${qtd > 0 ? `As ${qtd} aula(s) não serão apagadas, apenas desvinculadas.` : 'Ela está vazia.'}`)) return;
+  const qtd = getListaItens(id).length;
+  if (!confirm(`Excluir a Lista "${m.nome}"?\n${qtd > 0 ? `Os ${qtd} item(s) não serão apagados, apenas desvinculados.` : 'Ela está vazia.'}`)) return;
   dados.listas = dados.listas.filter(x => x.id !== id);
-  dados.videos.forEach(v => { if (v.listaId === id) v.listaId = null; });
   salvarLocal();
   renderlistas();
   renderDashboardGeral();
@@ -1655,11 +2571,37 @@ function formPromptIA(listaNome) {
     </div>
 
     <div class="form-group">
+      <label>Organizar em módulos?</label>
+      <div class="chip-group" id="pq-modulos">
+        <div class="chip active" data-val="Sim" onclick="toggleChipSingle(this,'pq-modulos')">Sim</div>
+        <div class="chip" data-val="Não" onclick="toggleChipSingle(this,'pq-modulos')">Não</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Tamanho de cada módulo</label>
+      <div class="chip-group" id="pq-tamanho">
+        <div class="chip" data-val="Pequeno (2-4 itens)" onclick="toggleChipSingle(this,'pq-tamanho')">Pequeno</div>
+        <div class="chip active" data-val="Médio (5-8 itens)" onclick="toggleChipSingle(this,'pq-tamanho')">Médio</div>
+        <div class="chip" data-val="Grande (9-12 itens)" onclick="toggleChipSingle(this,'pq-tamanho')">Grande</div>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label>Quantidade de vídeos</label>
       <div class="chip-group" id="pq-qtd">
         <div class="chip" data-val="5 a 10" onclick="toggleChipSingle(this,'pq-qtd')">5–10</div>
         <div class="chip active" data-val="10 a 20" onclick="toggleChipSingle(this,'pq-qtd')">10–20</div>
         <div class="chip" data-val="20 a 30" onclick="toggleChipSingle(this,'pq-qtd')">20–30</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Quantidade de artigos de apoio</label>
+      <div class="chip-group" id="pq-artigos">
+        <div class="chip active" data-val="0" onclick="toggleChipSingle(this,'pq-artigos')">0</div>
+        <div class="chip" data-val="1 a 3" onclick="toggleChipSingle(this,'pq-artigos')">1–3</div>
+        <div class="chip" data-val="4 a 6" onclick="toggleChipSingle(this,'pq-artigos')">4–6</div>
       </div>
     </div>
 
@@ -1704,11 +2646,14 @@ window.gerarPromptIA = function() {
   const idioma    = getChipSingle('pq-idioma') || 'Português';
   const formatos  = getChipMulti('pq-formato');
   const tipos     = getChipMulti('pq-tipo');
+  const modulos   = getChipSingle('pq-modulos') || 'Sim';
+  const tamanho   = getChipSingle('pq-tamanho') || 'Médio (5-8 itens)';
   const qtd       = getChipSingle('pq-qtd')    || '10 a 20';
+  const artigos   = getChipSingle('pq-artigos') || '0';
   const contexto  = (document.getElementById('pq-contexto')?.value   || '').trim();
   const subtopicos= (document.getElementById('pq-subtopicos')?.value || '').trim();
 
-  const prompt = montarPromptTexto({ tema, nivel, idioma, formatos, tipos, qtd, contexto, subtopicos });
+  const prompt = montarPromptTexto({ tema, nivel, idioma, formatos, tipos, modulos, tamanho, qtd, artigos, contexto, subtopicos });
   window._promptGerado = prompt;
 
   modalTituloTexto.textContent = 'Prompt gerado ✅';
@@ -1729,20 +2674,22 @@ window.gerarPromptIA = function() {
     <textarea id="iaJsonPaste" placeholder='Cole o JSON aqui...' style="width:100%;min-height:90px;background:var(--bg-input);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:monospace;font-size:0.75rem;padding:8px 10px;resize:vertical"></textarea>
     <button class="btn-submit" onclick="importarRespostaIA()" style="margin-top:8px;background:linear-gradient(135deg,#00c897,#00a87a)">
       <svg style="width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><use href="#i-upload"/></svg>
-      Importar vídeos para a lista
+      Importar conteúdo para a lista
     </button>
   `;
 };
 
-function montarPromptTexto({ tema, nivel, idioma, formatos, tipos, qtd, contexto, subtopicos }) {
+function montarPromptTexto({ tema, nivel, idioma, formatos, tipos, modulos, tamanho, qtd, artigos, contexto, subtopicos }) {
   const L = [];
   L.push(`Preciso de uma lista de vídeos do YouTube sobre: "${tema}".`);
+  if (artigos && artigos !== '0') L.push(`Inclua também ${artigos} artigos de apoio relacionados ao tema.`);
   L.push('');
   L.push('PERFIL E PREFERÊNCIAS:');
   L.push(`- Nível desejado: ${nivel}`);
   L.push(`- Idioma: ${idioma}`);
   if (formatos.length) L.push(`- Formatos preferidos: ${formatos.join(', ')}`);
   if (tipos.length)    L.push(`- Tipo de conteúdo: ${tipos.join(', ')}`);
+  if (modulos === 'Sim') L.push(`- Cada módulo deve ter aproximadamente: ${tamanho}`);
   if (contexto) {
     L.push('');
     L.push('CONTEXTO / OBJETIVO:');
@@ -1755,31 +2702,80 @@ function montarPromptTexto({ tema, nivel, idioma, formatos, tipos, qtd, contexto
   }
   L.push('');
   L.push('FORMATO DA RESPOSTA:');
-  L.push(`Sugira de ${qtd} vídeos reais do YouTube, agrupados por nível (Iniciante → Intermediário → Avançado).`);
+  if (modulos === 'Sim') {
+    L.push(`Sugira de ${qtd} vídeos reais do YouTube, organizados em módulos temáticos dentro do array "modulos".`);
+  } else {
+    L.push(`Sugira de ${qtd} vídeos reais do YouTube. Use arrays "videos" e "artigos" caso não queira módulos.`);
+  }
   L.push('');
   L.push('REGRAS CRÍTICAS — siga todas sem exceção:');
-  L.push(`1. Gere EXATAMENTE ${qtd} objetos no array "videos". Não gere menos.`);
-  L.push('2. Para CADA vídeo, inclua obrigatoriamente os campos: titulo, url, canal, duracao, nivel, notas.');
-  L.push('3. VERIFICAÇÃO DE EXISTÊNCIA OBRIGATÓRIA: antes de incluir um vídeo, confirme internamente que ele existe e está disponível no YouTube. Inclua APENAS vídeos que você tem alta confiança de que existem e estão públicos. NÃO inclua vídeos que possam estar indisponíveis, privados ou excluídos.');
-  L.push('4. O campo "url" deve ser a URL real e verificada do vídeo (youtube.com/watch?v=ID ou youtu.be/ID). Se não tiver certeza da URL exata de um vídeo, OMITA esse vídeo e substitua por outro que você conhece com certeza. Nunca invente um ID de vídeo.');
-  L.push('5. O campo "url" deve ser SOMENTE a URL pura, sem colchetes, sem markdown, sem texto adicional. Exemplo correto: https://www.youtube.com/watch?v=dQw4w9WgXcQ');
-  L.push('6. Responda APENAS com o JSON. Nenhum texto, título, explicação ou markdown antes ou depois.');
-  L.push('7. O JSON deve ser válido e parseable diretamente com JSON.parse().');
+  if (modulos === 'Sim') {
+    L.push('1. Gere um objeto JSON com os campos: nome, emoji, introducao e modulos.');
+    L.push('2. Cada módulo deve ter: id, nome, ordem e itens.');
+    L.push('3. Cada item deve ter: tipo (video | artigo | texto) e os campos específicos do tipo.');
+  } else {
+    L.push(`1. Gere EXATAMENTE ${qtd} objetos no array "videos". Não gere menos.`);
+    L.push('2. Para CADA vídeo, inclua obrigatoriamente os campos: titulo, url, canal, duracao, nivel, notas.');
+  }
+  L.push('4. VERIFICAÇÃO DE EXISTÊNCIA OBRIGATÓRIA: antes de incluir um vídeo, confirme internamente que ele existe e está disponível no YouTube. Inclua APENAS vídeos que você tem alta confiança de que existem e estão públicos. NÃO inclua vídeos que possam estar indisponíveis, privados ou excluídos.');
+  L.push('5. O campo "url" deve ser a URL real e verificada do vídeo (youtube.com/watch?v=ID ou youtu.be/ID). Se não tiver certeza da URL exata de um vídeo, OMITA esse vídeo e substitua por outro que você conhece com certeza. Nunca invente um ID de vídeo.');
+  L.push('6. O campo "url" deve ser SOMENTE a URL pura, sem colchetes, sem markdown, sem texto adicional. Exemplo correto: https://www.youtube.com/watch?v=dQw4w9WgXcQ');
+  L.push('7. Para artigos, use o mesmo cuidado: inclua URL real, título preciso e resumo breve.');
+  L.push('8. O JSON deve conter também os campos de lista: nome, emoji e introducao.');
+  L.push('9. Responda APENAS com o JSON. Nenhum texto, título, explicação ou markdown antes ou depois.');
+  L.push('10. O JSON deve ser válido e parseable diretamente com JSON.parse().');
   L.push('');
   L.push('ESQUEMA OBRIGATÓRIO (copie a estrutura exatamente):');
   L.push('');
   L.push('{');
-  L.push('  "videos": [');
-  L.push('    {');
-  L.push('      "titulo": "Título exato do vídeo",');
-  L.push('      "url": "https://www.youtube.com/watch?v=ID_DO_VIDEO",');
-  L.push('      "canal": "Nome do canal",');
-  L.push('      "duracao": "12:34",');
-  L.push('      "nivel": "Iniciante",');
-  L.push('      "notas": "Explica X de forma clara para iniciantes, cobre Y e Z."');
-  L.push('    },');
-  L.push('    { ... próximo vídeo ... }');
-  L.push('  ]');
+  L.push('  "nome": "Nome da lista de estudo",');
+  L.push('  "emoji": "📚",');
+  L.push('  "introducao": "Breve introdução ao tema da lista.",');
+  if (modulos === 'Sim') {
+    L.push('  "modulos": [');
+    L.push('    {');
+    L.push('      "id": 1,');
+    L.push('      "nome": "Fundamentos",');
+    L.push('      "ordem": 1,');
+    L.push('      "itens": [');
+    L.push('        {');
+    L.push('          "tipo": "video",');
+    L.push('          "titulo": "Título exato do vídeo",');
+    L.push('          "url": "https://www.youtube.com/watch?v=ID_DO_VIDEO",');
+    L.push('          "canal": "Nome do canal",');
+    L.push('          "duracao": "12:34",');
+    L.push('          "notas": "Resumo breve do conteúdo do vídeo"');
+    L.push('        },');
+    L.push('        {');
+    L.push('          "tipo": "artigo",');
+    L.push('          "titulo": "Título do artigo",');
+    L.push('          "url": "https://exemplo.com/artigo",');
+    L.push('          "resumo": "Resumo breve do artigo."');
+    L.push('        }');
+    L.push('      ]');
+    L.push('    }');
+    L.push('  ]');
+  } else {
+    L.push('  "videos": [');
+    L.push('    {');
+    L.push('      "titulo": "Título exato do vídeo",');
+    L.push('      "url": "https://www.youtube.com/watch?v=ID_DO_VIDEO",');
+    L.push('      "canal": "Nome do canal",');
+    L.push('      "duracao": "12:34",');
+    L.push('      "nivel": "Iniciante",');
+    L.push('      "notas": "Explica X de forma clara para iniciantes, cobre Y e Z."');
+    L.push('    },');
+    L.push('    { ... próximo vídeo ... }');
+    L.push('  ],');
+    L.push('  "artigos": [');
+    L.push('    {');
+    L.push('      "titulo": "Título do artigo",');
+    L.push('      "url": "https://exemplo.com/artigo",');
+    L.push('      "resumo": "Resumo breve do artigo."');
+    L.push('    },');
+    L.push('    { ... próximo artigo ... }');
+    L.push('  ]');
+  }
   L.push('}');
   return L.join('\n');
 }
@@ -1798,18 +2794,97 @@ window.importarRespostaIA = function() {
     return;
   }
 
-  const lista = parsed.videos;
-  if (!Array.isArray(lista) || lista.length === 0) {
-    toast('Nenhum vídeo encontrado no JSON');
+  const listaVideos = Array.isArray(parsed.videos) ? parsed.videos : [];
+  const listaArtigos = Array.isArray(parsed.artigos) ? parsed.artigos : [];
+  const listaModulos = Array.isArray(parsed.modulos) ? parsed.modulos : [];
+  if (listaVideos.length === 0 && listaArtigos.length === 0 && listaModulos.length === 0) {
+    toast('Nenhum vídeo, artigo ou módulo encontrado no JSON');
     return;
   }
 
   const listaId = window._iaListaNome
     ? (dados.listas.find(l => l.nome === window._iaListaNome)?.id ?? null)
     : null;
+  if (!listaId) {
+    toast('Lista destino não encontrada');
+    return;
+  }
+
+  const lista = dados.listas.find(l => l.id === listaId);
+  if (lista && typeof parsed.introducao === 'string' && parsed.introducao.trim()) {
+    lista.introducao = parsed.introducao.trim();
+  }
 
   let adicionados = 0;
-  lista.forEach(item => {
+  if (listaModulos.length > 0) {
+    listaModulos.forEach(m => {
+      const mod = {
+        id: gerarId(lista.modulos),
+        nome: (m.nome || '').trim() || `Módulo ${lista.modulos.length + 1}`,
+        ordem: m.ordem != null ? Number(m.ordem) : lista.modulos.length + 1,
+        itens: []
+      };
+      (Array.isArray(m.itens) ? m.itens : []).forEach(item => {
+        const tipoRaw = (item.tipo || '').toString().trim().toLowerCase();
+        const url = (item.url || '').trim();
+        const titulo = (item.titulo || '').trim();
+        const duracao = (item.duracao || '').trim();
+        const canal = (item.canal || '').trim();
+        const notas = (item.notas || '').trim();
+        const resumo = (item.resumo || '').trim();
+        const conteudo = (item.conteudo || '').trim();
+        const tipo = tipoRaw === 'artigo' || tipoRaw === 'texto' ? tipoRaw : (url && /youtu/i.test(url) ? 'video' : 'artigo');
+
+        if (tipo === 'video' && url) {
+          const normalizedUrl = url.replace(/^\[.*?\]\(([^)]+)\)$/, '$1').replace(/^[\["'`]+|[\]"'`]+$/g, '').trim();
+          const finalUrl = /^https?:\/\//i.test(normalizedUrl) ? normalizedUrl : 'https://' + normalizedUrl;
+          const finalTitulo = titulo || finalUrl;
+          mod.itens.push({
+            id: gerarId(mod.itens),
+            tipo: 'video',
+            url: finalUrl,
+            titulo: finalTitulo,
+            canal,
+            notas: [duracao ? `Duração: ${duracao}` : '', notas].filter(Boolean).join(' | '),
+            videoId: extrairVideoId(finalUrl) || null,
+            assistido: false,
+            dataAdicionado: hoje(),
+            dataAssistido: null,
+            listaId
+          });
+          adicionados++;
+        } else if (tipo === 'artigo' && (titulo || url)) {
+          mod.itens.push({
+            id: gerarId(mod.itens),
+            tipo: 'artigo',
+            titulo: titulo || url,
+            url,
+            resumo,
+            lido: false,
+            dataAdicionado: hoje(),
+            dataLido: null,
+            listaId
+          });
+          adicionados++;
+        } else if (tipo === 'texto' && conteudo) {
+          mod.itens.push({
+            id: gerarId(mod.itens),
+            tipo: 'texto',
+            titulo: titulo || 'Texto',
+            conteudo,
+            concluido: false,
+            dataAdicionado: hoje(),
+            dataConcluido: null,
+            listaId
+          });
+          adicionados++;
+        }
+      });
+      if (mod.itens.length > 0) lista.modulos.push(mod);
+    });
+  }
+
+  listaVideos.forEach(item => {
     // Limpa URLs com lixo de markdown: [texto](url) → url, colchetes soltos, aspas etc.
     let url = (item.url || '').trim()
       .replace(/^\[.*?\]\(([^)]+)\)$/, '$1')  // [label](url) → url
@@ -1824,30 +2899,51 @@ window.importarRespostaIA = function() {
       item.duracao? `Duração: ${item.duracao}` : '',
       item.notas  ? item.notas                 : ''
     ].filter(Boolean).join(' | ');
-    const videoId = extrairVideoId(url) || null;
     if (!titulo && !url) return;
-    dados.videos.push({
-      id: gerarId(dados.videos),
+    const targetModulo = ensureListaModulo(listaId);
+    targetModulo.itens.push({
+      id: gerarId(targetModulo.itens),
+      tipo: 'video',
       url,
       titulo: titulo || url,
       canal,
-      listaId,
       notas,
-      videoId,
+      videoId: extrairVideoId(url) || null,
       assistido: false,
       dataAdicionado: hoje(),
-      dataAssistido: null
+      dataAssistido: null,
+      listaId
     });
     adicionados++;
   });
 
-  if (adicionados === 0) { toast('Nenhum vídeo válido para importar'); return; }
+  listaArtigos.forEach(item => {
+    const url = (item.url || '').trim();
+    const titulo = (item.titulo || '').trim();
+    const resumo = (item.resumo || '').trim();
+    if (!titulo && !url) return;
+    const targetModulo = ensureListaModulo(listaId);
+    targetModulo.itens.push({
+      id: gerarId(targetModulo.itens),
+      tipo: 'artigo',
+      titulo: titulo || url,
+      url,
+      resumo,
+      lido: false,
+      dataAdicionado: hoje(),
+      dataLido: null,
+      listaId
+    });
+    adicionados++;
+  });
+
+  if (adicionados === 0) { toast('Nenhum item válido para importar'); return; }
   salvarLocal();
   renderVideos();
   renderDashboardGeral();
   if (listaId && listaAtualId === listaId) renderDashboardlista(listaId);
   fecharModal();
-  toast(`${adicionados} vídeo${adicionados !== 1 ? 's' : ''} importado${adicionados !== 1 ? 's' : ''}! 🎬`);
+  toast(`${adicionados} item${adicionados !== 1 ? 's' : ''} importado${adicionados !== 1 ? 's' : ''}! 🎬`);
 };
 
 window.copiarPrompt = function() {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'yt-lista-v1';
+const CACHE_NAME = 'yt-lista-v2';
 const ASSETS = [
   './',
   './index.html',
